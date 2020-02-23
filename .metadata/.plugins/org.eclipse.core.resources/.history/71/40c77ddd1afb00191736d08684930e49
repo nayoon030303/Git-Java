@@ -1,0 +1,266 @@
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import java.awt.SystemColor;
+import javax.swing.ImageIcon;
+
+public class Main {
+
+	private JFrame frame;
+	
+	private Monthlabel mlabel;
+	private Yearlabel ylabel;
+	private BtnR btnR;
+	private BtnL btnL;
+	private Counter counter = new Counter();
+	Calendar cal = Calendar.getInstance();//Calendar Instance 얻어옴
+	int endDate = cal.getActualMaximum(Calendar.DATE);//달의 마지막일 얻기
+	private JButton[] btn_day = new JButton[endDate];// 그달의 마지막 달
+	int month_N = cal.get(Calendar.MONTH);
+	int year = cal.get(Calendar.YEAR);//시작:2019년
+	int month = month_N+1;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Main window = new Main();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Main() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame("Test3");
+		frame.setBounds(100, 100, 1042, 670);//윈도우 크기
+		
+		JPanel jpanel = new JPanel();
+		jpanel.setBackground(new Color(204, 204, 204));
+		frame.getContentPane().add(jpanel);
+		frame.setLocationRelativeTo(null);
+		jpanel.setLayout(null);
+		
+		
+		Weekpanel panel = new Weekpanel(); //WeekPanel
+		jpanel.add(panel);
+		//panel.setVisible(true);
+		
+		
+		
+		Leftpanel lpanel = new Leftpanel();//Leftpanel
+		jpanel.add(lpanel);
+		//panel.setVisible(true);
+	
+		
+	
+		ylabel = new Yearlabel(year+"");//Year label
+		jpanel.add(ylabel);
+		
+		
+	
+		mlabel = new Monthlabel(month+"");	//Month label
+		jpanel.add(mlabel);
+	
+		
+		btnR = new BtnR();//M +오른쪽
+		jpanel.add(btnR);
+		
+		
+		btnL = new BtnL();//M - 왼쪽
+		jpanel.add(btnL);
+		
+		btnL.addActionListener(counter);//action event
+		btnR.addActionListener(counter);
+	
+		
+		JLabel lblNewLabel = new JLabel(""); //이미지
+		lblNewLabel.setFont(new Font("휴먼가는샘체", Font.PLAIN, 15));
+		lblNewLabel.setBounds(14, 37, 88, 79);
+		jpanel.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\qwer1\\Pictures\\\uC790\uB8CC\\img.png"));
+		
+
+		
+		
+		
+		
+		cal.set(year,month_N,1);
+		int sDayNum = cal.get(Calendar.DAY_OF_WEEK); // 1일의 요일 얻어오기,
+		int locationX=0;
+		int sDay = sDayNum;
+		int width=66;
+		int height=62;
+		
+		int a=0;
+		int b=0;
+		int c=0;
+		int d=0;
+		int e=0;
+		
+		
+	
+		
+			for(int i=1; i<sDayNum; i++) {
+				locationX=(30+(i*102));
+			}
+			for(int i=0; i<endDate; i++) {	
+			
+				 btn_day[i] = new JButton((i+1)+"");
+				 btn_day[i].setBackground(new Color(204,204,204));
+				 btn_day[i].setFont(new Font("굴림체", Font.BOLD, 20));
+				 btn_day[i].setBorderPainted(false);
+				 
+				 if(sDay<8) {
+					 btn_day[i].setBounds(locationX+(102*a), 184, width, height);
+					 a++;
+				 }
+				 else if(sDay>=8 && sDay<=14) {
+					 btn_day[i].setBounds((102*b)+30, 276, width, height);
+					 b++;
+				 }
+				 else if(sDay>=15 && sDay<=21) {
+					 btn_day[i].setBounds((102*c)+30, 368, width, height);
+					 c++;
+				 }
+				 else if(sDay>=22 && sDay<=28) {
+					 btn_day[i].setBounds((102*d)+30, 460, width, height);
+					 d++;
+				 }
+				 else if(sDay>=29 && sDay<=endDate+sDayNum) {
+					 btn_day[i].setBounds((102*e)+30, 552, width, height);
+					 e++;
+				 }
+				 sDay++;
+				 jpanel.add(btn_day[i]);
+			}
+		
+		
+	
+		
+		
+		
+		
+		frame.getContentPane().add(jpanel);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	class Counter implements ActionListener {
+		JPanel newPanel = new JPanel();
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			if(event.getSource().equals(btnL)){
+				month--;
+				if(month<1) {
+					month=12;
+					year-=1;
+					ylabel.setText(year+"");
+				}
+				mlabel.setText(month+"");
+				
+				cal.set(year, month,1);
+				int sDayNum = cal.get(Calendar.DAY_OF_WEEK); // 1일의 요일 얻어오기,
+				int locationX=0;
+				int sDay = sDayNum;
+				int width=66;
+				int height=62;
+				
+				int a=0;
+				int b=0;
+				int c=0;
+				int d=0;
+				int e=0;
+				
+				
+			
+				
+					for(int i=1; i<sDayNum; i++) {
+						locationX=(30+(i*102));
+					}
+					for(int i=0; i<endDate; i++) {	
+					
+						 btn_day[i] = new JButton((i+1)+"");
+						 btn_day[i].setBackground(new Color(204,204,204));
+						 btn_day[i].setFont(new Font("굴림체", Font.BOLD, 20));
+						 btn_day[i].setBorderPainted(false);
+						 
+						 if(sDay<8) {
+							 btn_day[i].setBounds(locationX+(102*a), 184, width, height);
+							 a++;
+						 }
+						 else if(sDay>=8 && sDay<=14) {
+							 btn_day[i].setBounds((102*b)+30, 276, width, height);
+							 b++;
+						 }
+						 else if(sDay>=15 && sDay<=21) {
+							 btn_day[i].setBounds((102*c)+30, 368, width, height);
+							 c++;
+						 }
+						 else if(sDay>=22 && sDay<=28) {
+							 btn_day[i].setBounds((102*d)+30, 460, width, height);
+							 d++;
+						 }
+						 else if(sDay>=29 && sDay<=endDate+sDayNum) {
+							 btn_day[i].setBounds((102*e)+30, 552, width, height);
+							 e++;
+						 }
+						 sDay++;
+						 newPanel.add(btn_day[i]);
+						 frame.add(newPanel);
+					}
+				
+				
+			}
+			if(event.getSource().equals(btnR)) {
+				month++;
+				if(month>12) {
+					month = 1;
+					year+=1;
+					ylabel.setText(year+"");
+					
+				}
+				mlabel.setText(month+"");
+				
+			}
+			
+		}
+		
+	}
+
+		
+		
+}
+	

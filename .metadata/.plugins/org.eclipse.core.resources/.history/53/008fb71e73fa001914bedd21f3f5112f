@@ -1,0 +1,17 @@
+package btnTest;
+
+import javax.swing.JFrame;
+
+public class Testbtnn extends JFrame{
+	 public Testbtnn() {
+		ButtonD btn = new ButtonD(2019, 11);
+		add(btn);
+		setSize(1042,670);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	public static void main(String[] args) {
+		
+		new	ButtonD(2019, 10);
+	}
+}

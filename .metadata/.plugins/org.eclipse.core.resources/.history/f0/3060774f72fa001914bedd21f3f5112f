@@ -1,0 +1,10 @@
+package btnTest;
+
+import javax.swing.JFrame;
+
+public class Testbtnn extends JFrame{
+	public static void main(String[] args) {
+		ButtonD btn = new ButtonD(2019, 10);
+		new	ButtonD(2019, 10);
+	}
+}

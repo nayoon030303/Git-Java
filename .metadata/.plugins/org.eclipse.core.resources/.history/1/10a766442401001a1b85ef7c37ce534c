@@ -1,0 +1,120 @@
+
+package GUINewFTT;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class AddSchedule extends JPanel {
+	
+	private JButton addBtn; 
+	private JTextField textf;
+	private JCheckBox jchec[];
+	
+	private String sch[] = new String[4];
+	private int i=0;
+	private int j=0;
+	
+	public AddSchedule() {
+		setBounds(336, 89,446, 402);//panel
+		setLayout(null);
+		setBackground(new Color(241,236,247));
+		
+		addBtn= new JButton("add");//추가 버튼
+		addBtn.setBounds(323,12, 105, 27);
+		addBtn.setBackground(new Color(203,190,211));
+		add(addBtn);
+		
+		textf = new JTextField();//추가 field
+		textf.setFont(new Font("굴림", Font.PLAIN, 20));
+		textf.setBounds(10,51,418,78);
+		add(textf);
+		
+		jchec= new JCheckBox[4];
+		
+		for(int i=0; i<4; i++) {//체크 박스 4개 생성  && 삭제 버튼 생성
+			jchec[i] = new JCheckBox(" ");
+			jchec[i].setBounds(10,150+(i*63),342,56);
+			jchec[i].setFont(new Font("굴림", Font.PLAIN, 20));
+			jchec[i].setBackground(new Color(241,236,247));
+			jchec[i].setVisible(false);
+			add(jchec[i]);	
+			
+		}
+		
+addBtn.addActionListener(new ActionListener() {//add 버튼을 눌렀을때
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 입력값이 있을때만 실행
+				String str = textf.getText();
+				int num = str.length();
+				if(num != 0) {
+					if(j<4) {
+						jchec[i].setText(str);
+						jchec[i].setVisible(true);
+						add(jchec[i]);
+						textf.setText("");
+						sch[i]=str;
+						i++;
+						j++;
+					}else {
+						textf.setText("최대: 4개");
+					}
+					
+				}
+			}
+		});//end action add
+	}
+	public String getS1() {
+		return sch[0];
+		
+	}
+	public String getS2() {
+		return sch[1];
+		
+	}
+	public String getS3() {
+		return sch[2];
+		
+	}
+	public String getS4() {
+		return sch[3];
+		
+	}
+	public void setS1(String s1) {
+		if(s1 != "null") {
+			jchec[0].setText(s1);
+			jchec[0].setVisible(true);
+		}
+	
+	}
+	public void setS2(String s2) {
+		if(s2 != "null") {
+			jchec[1].setText(s2);
+			jchec[1].setVisible(true);
+			
+		}
+		
+	}
+	public void setS3(String s3) {
+		if(s3!="null") {
+			jchec[2].setText(s3);
+			jchec[2].setVisible(true);
+		}
+		
+	}
+	public void setS4(String s4) {
+		if(s4 != null) {
+			jchec[3].setText(s4);
+			jchec[3].setVisible(true);
+		}
+		
+	}
+}

@@ -1,0 +1,12 @@
+package btnTest;
+
+import javax.swing.JFrame;
+
+public class Testbtnn {
+	public static void main(String[] args) {
+		JFrame jframe = new JFrame();
+		jframe.setVisible(true);
+		jframe.setSize(1042,670);
+		new	ButtonD(2019, 10);
+	}
+}
